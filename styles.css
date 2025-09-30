@@ -1618,18 +1618,40 @@ footer {
     /* Testimonials */
     .testimonials-carousel {
         margin: 2rem auto 0;
+        max-width: 380px;
     }
     
     .testimonial-slide {
         padding: 2rem;
-        min-height: 350px;
+        height: 420px;
+        max-height: 420px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
     
     .testimonial-content {
-        font-size: 1.1rem;
-        line-height: 1.6;
+        font-size: 1.05rem;
+        line-height: 1.5;
         margin-bottom: 1.5rem;
-        min-height: 100px;
+        height: 140px;
+        max-height: 140px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        flex-shrink: 0;
+    }
+    
+    .testimonial-rating {
+        margin-bottom: 1rem;
+        flex-shrink: 0;
+    }
+    
+    .testimonial-author {
+        margin-top: auto;
+        flex-shrink: 0;
     }
     
     .author-avatar {
@@ -1650,6 +1672,11 @@ footer {
         width: 45px;
         height: 45px;
         font-size: 1rem;
+    }
+    
+    .carousel-controls {
+        margin-top: 1.5rem;
+        gap: 0.75rem;
     }
     
     /* Contact */
