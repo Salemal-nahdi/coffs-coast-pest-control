@@ -719,7 +719,7 @@ nav.scrolled {
 
 .stats-ticker-content {
     display: flex;
-    animation: scroll 15s linear infinite;
+    animation: scroll 10s linear infinite;
     will-change: transform;
 }
 
