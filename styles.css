@@ -699,6 +699,11 @@ nav.scrolled {
     .hero-logo-container {
         display: none;
     }
+    
+    /* Ensure back to top button is hidden on smallest mobile devices */
+    .back-to-top {
+        display: none !important;
+    }
 }
 
 
