@@ -277,6 +277,7 @@ nav.scrolled {
     
     .mobile-menu-toggle {
         z-index: 1002;
+        margin-top: 3px;
     }
 }
 
@@ -526,6 +527,7 @@ nav.scrolled {
     .mobile-menu-toggle {
         display: flex;
         z-index: 1001;
+        margin-top: 3px;
     }
 
     .mobile-menu-toggle.active span:nth-child(1) {
