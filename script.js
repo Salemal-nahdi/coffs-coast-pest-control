@@ -213,3 +213,26 @@ const fadeObserver = new IntersectionObserver((entries) => {
 fadeElements.forEach(el => {
     fadeObserver.observe(el);
 });
+
+// Smooth Infinite Stats Ticker
+const ticker = document.querySelector('.stats-ticker-content');
+let scrollPosition = 0;
+const scrollSpeed = 0.5; // pixels per frame - adjust for speed
+
+function animateTicker() {
+    scrollPosition += scrollSpeed;
+    
+    // Get the width of one complete set (we have 6 sets, so divide by 6)
+    const tickerWidth = ticker.scrollWidth / 6;
+    
+    // Reset position when we've scrolled one complete set
+    if (scrollPosition >= tickerWidth) {
+        scrollPosition = 0;
+    }
+    
+    ticker.style.transform = `translateX(-${scrollPosition}px)`;
+    requestAnimationFrame(animateTicker);
+}
+
+// Start the animation
+animateTicker();
