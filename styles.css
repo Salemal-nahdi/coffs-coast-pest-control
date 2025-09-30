@@ -1500,21 +1500,30 @@ footer {
     }
     
     .services-grid {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         gap: 2rem;
-        max-width: 400px;
+        max-width: 380px;
         margin: 0 auto;
+        padding: 0 1rem;
     }
     
     .service-card {
         height: auto;
         min-height: 320px;
-        padding: 2.5rem 2rem;
+        padding: 0;
         border-radius: 25px;
         box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
         transition: all 0.3s ease;
         cursor: default;
-        transform-style: flat;
+        transform-style: flat !important;
+        transform: none !important;
+        background: var(--primary-white);
+        position: relative;
+        overflow: visible;
+        width: 100%;
+        margin: 0 auto;
+        perspective: none !important;
     }
     
     .service-card:hover {
@@ -1523,7 +1532,23 @@ footer {
     }
     
     .service-card-face {
-        padding: 0;
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        backface-visibility: visible !important;
+        transform: none !important;
+        padding: 2.5rem 2rem;
+        display: flex !important;
+        flex-direction: column;
+    }
+    
+    .service-card-back {
+        display: none !important;
+    }
+    
+    .service-card-front {
+        background: transparent !important;
+        position: static !important;
     }
     
     .service-icon {
@@ -1551,6 +1576,7 @@ footer {
     .service-cta {
         text-align: center;
         margin-top: auto;
+        padding-top: 1rem;
     }
     
     .service-link {
@@ -1564,6 +1590,8 @@ footer {
         align-items: center;
         gap: 0.5rem;
         transition: all 0.3s ease;
+        justify-content: center;
+        min-width: 140px;
     }
     
     .service-link:hover {
@@ -1571,6 +1599,10 @@ footer {
         color: var(--primary-black);
         border: 2px solid var(--primary-black);
         transform: translateY(-2px);
+    }
+    
+    .service-features {
+        display: none;
     }
     
     /* Stats ticker */
