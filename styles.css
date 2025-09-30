@@ -1087,13 +1087,13 @@ nav.scrolled {
 }
 
 .contact-info {
-    animation: fadeInLeft 1s ease;
+    animation: fadeInLeft 1.2s ease-out;
 }
 
 @keyframes fadeInLeft {
     from {
         opacity: 0;
-        transform: translateX(-50px);
+        transform: translateX(-30px);
     }
     to {
         opacity: 1;
@@ -1172,13 +1172,13 @@ nav.scrolled {
     border: 1px solid var(--glass-border);
     padding: 3rem;
     border-radius: 20px;
-    animation: fadeInRight 1s ease;
+    animation: fadeInRight 1.2s ease-out;
 }
 
 @keyframes fadeInRight {
     from {
         opacity: 0;
-        transform: translateX(50px);
+        transform: translateX(30px);
     }
     to {
         opacity: 1;

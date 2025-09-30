@@ -62,10 +62,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Process Timeline Animation
+// Process Timeline Animation - Smooth loading settings
 const observerOptions = {
-    threshold: 0.5,
-    rootMargin: '0px 0px -100px 0px'
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
 };
 
 const timelineObserver = new IntersectionObserver((entries) => {
@@ -78,7 +78,7 @@ const timelineObserver = new IntersectionObserver((entries) => {
                 setTimeout(() => {
                     step.classList.add('active');
                 }, delay);
-                delay += 500;
+                delay += 300; // Faster, smoother stagger
             });
             
             timelineObserver.unobserve(entry.target);
@@ -91,20 +91,18 @@ if (processSection) {
     timelineObserver.observe(processSection);
 }
 
-// Service Cards Animation
+// Service Cards Animation - Smooth and gentle
 const serviceObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
+    entries.forEach((entry) => {
         if (entry.isIntersecting) {
+            entry.target.style.opacity = '0';
+            entry.target.style.transform = 'translateY(20px)';
+            entry.target.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+            
             setTimeout(() => {
-                entry.target.style.opacity = '0';
-                entry.target.style.transform = 'translateY(30px)';
-                
-                setTimeout(() => {
-                    entry.target.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, 100);
-            }, index * 100);
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }, 100);
             
             serviceObserver.unobserve(entry.target);
         }
@@ -190,17 +188,17 @@ form.addEventListener('submit', (e) => {
     form.reset();
 });
 
-// Add intersection observer for fade-in animations
+// Add intersection observer for smooth fade-in animations
 const fadeElements = document.querySelectorAll('.section-header, .contact-card');
 
 const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '0';
-            entry.target.style.transform = 'translateY(30px)';
+            entry.target.style.transform = 'translateY(20px)';
+            entry.target.style.transition = 'opacity 1s ease-out, transform 1s ease-out';
             
             setTimeout(() => {
-                entry.target.style.transition = 'all 0.6s ease';
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
             }, 100);
