@@ -357,20 +357,6 @@ nav.scrolled {
     }
 }
 
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--glass-bg);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border);
-    padding: 0.5rem 1.5rem;
-    border-radius: 50px;
-    margin-bottom: 1.5rem;
-    color: var(--primary-white);
-    font-weight: 600;
-    animation: pulse 2s ease infinite;
-}
 
 .hero-text h1 {
     font-size: 5rem;
