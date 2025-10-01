@@ -48,7 +48,7 @@ This ultra-modern, cutting-edge website for Coffs Coast Pest Control features:
    - `script.js`
    - `logo-no-background.png`
 
-2. For the contact form to work, sign up for Formspree.io and replace `YOUR_FORM_ID` in the form action
+2. The contact form is configured to work with Netlify Forms automatically when deployed to Netlify. No additional setup required!
 
 ### 💻 Technologies Used
 

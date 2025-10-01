@@ -583,7 +583,11 @@
             </div>
             
             <div class="contact-form-wrapper">
-                <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="contact" />
+                    <div style="display: none;">
+                        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                    </div>
                     <div class="form-grid">
                         <div class="form-group half">
                             <div>

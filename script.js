@@ -177,15 +177,12 @@ backToTop.addEventListener('click', () => {
 
 // Theme toggle removed for consistent design
 
-// Form Validation
+// Form Validation - Netlify handles submission
 const form = document.querySelector('form');
 
 form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Add your form submission logic here
-    alert('Thank you for your inquiry! We\'ll contact you within 24 hours.');
-    form.reset();
+    // Form will submit to Netlify automatically
+    // Netlify will redirect to a success page or show a default message
 });
 
 // Add intersection observer for smooth fade-in animations
