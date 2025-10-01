@@ -31,7 +31,7 @@ This ultra-modern, cutting-edge website for Coffs Coast Pest Control features:
   - Animated stats ticker
   - Glassmorphism effects
   - Form validation
-  - SEO optimized
+  - SEO optimised
 
 - **📞 Contact Information**
   - Business: Coffs Coast Pest Control
