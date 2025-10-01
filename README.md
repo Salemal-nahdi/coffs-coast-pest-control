@@ -40,15 +40,31 @@ This ultra-modern, cutting-edge website for Coffs Coast Pest Control features:
   - Email: coffscoastpc@gmail.com
   - ABN: 95610493013
 
-### 🚀 How to Launch
+### 🚀 How to Deploy to Netlify
 
-1. Upload all files to your web hosting:
+1. **Push to GitHub** (already done! ✅)
+   - Your code is at: https://github.com/Salemal-nahdi/coffs-coast-pest-control
+
+2. **Deploy to Netlify:**
+   - Go to [netlify.com](https://netlify.com) and sign up/login
+   - Click "Add new site" → "Import an existing project"
+   - Connect to GitHub and select your repository
+   - Click "Deploy site"
+   - That's it! Your site will be live in seconds!
+
+3. **Contact Form:**
+   - The form is pre-configured to work with Netlify Forms
+   - After deployment, go to your Netlify dashboard → Forms to see submissions
+   - You can set up email notifications for new form submissions
+   - No additional setup required!
+
+### 📁 Required Files
+
+Make sure these files are in your repository:
    - `index.html`
    - `styles.css`
    - `script.js`
    - `logo-no-background.png`
-
-2. The contact form is configured to work with Netlify Forms automatically when deployed to Netlify. No additional setup required!
 
 ### 💻 Technologies Used
 
@@ -59,6 +75,7 @@ This ultra-modern, cutting-edge website for Coffs Coast Pest Control features:
 - CSS Animations & Transforms
 - Intersection Observer API
 - Modern ES6 JavaScript
+- Netlify Forms (with honeypot spam protection)
 
 ### 🎉 Enjoy Your Amazing New Website!
 
