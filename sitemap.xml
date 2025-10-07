@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://coffscoastpestcontrol.com/</loc>
+        <lastmod>2025-10-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://coffscoastpestcontrol.com/#about</loc>
+        <lastmod>2025-10-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://coffscoastpestcontrol.com/#services</loc>
+        <lastmod>2025-10-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://coffscoastpestcontrol.com/#gallery</loc>
+        <lastmod>2025-10-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://coffscoastpestcontrol.com/#testimonials</loc>
+        <lastmod>2025-10-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://coffscoastpestcontrol.com/#contact</loc>
+        <lastmod>2025-10-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+</urlset>
+

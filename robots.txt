@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Disallow: 
+
+Sitemap: https://coffscoastpestcontrol.com/sitemap.xml
+
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yahoo! Slurp
+Allow: /
+
