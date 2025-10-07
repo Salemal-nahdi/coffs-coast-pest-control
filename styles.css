@@ -504,6 +504,288 @@ nav.scrolled {
     filter: drop-shadow(0 20px 60px rgba(255, 255, 255, 0.3));
 }
 
+/* About Us Section */
+.about {
+    padding: 8rem 0;
+    background: linear-gradient(135deg, var(--primary-black) 0%, #1a1a1a 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.about::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.02)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.02)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.01)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.01)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.01)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    pointer-events: none;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.about-text .section-header {
+    text-align: left;
+    margin-bottom: 3rem;
+}
+
+.about-text .section-badge {
+    display: inline-block;
+}
+
+.about-text .section-title {
+    color: var(--primary-white);
+}
+
+.about-text .section-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    max-width: none;
+}
+
+.about-details {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.about-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.about-feature:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-white) 0%, #e0e0e0 100%);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-black);
+    font-size: 1.5rem;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+.feature-content h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-white);
+    margin-bottom: 0.5rem;
+}
+
+.feature-content p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.about-cta {
+    text-align: left;
+}
+
+.about-image {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.about-image img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.about-image:hover img {
+    transform: scale(1.05);
+}
+
+.image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    padding: 2rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.about-image:hover .image-overlay {
+    transform: translateY(0);
+}
+
+.overlay-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--primary-white);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.overlay-badge i {
+    font-size: 1.5rem;
+}
+
+/* Gallery Section */
+.gallery {
+    padding: 8rem 0;
+    background: var(--primary-white);
+}
+
+.gallery-scroll-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    color: var(--primary-black);
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 0.6;
+    animation: slideHint 2s ease-in-out infinite;
+}
+
+.gallery-scroll-hint i {
+    font-size: 1rem;
+}
+
+@keyframes slideHint {
+    0%, 100% {
+        transform: translateX(0);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateX(10px);
+        opacity: 1;
+    }
+}
+
+.gallery-grid {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1);
+    padding-bottom: 1rem;
+}
+
+/* Hide scroll hint when user starts scrolling */
+.gallery-grid:hover ~ .gallery-scroll-hint,
+.gallery-grid:active ~ .gallery-scroll-hint {
+    opacity: 0;
+}
+
+.gallery-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.gallery-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.gallery-grid::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.gallery-grid::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    flex: 0 0 400px;
+    height: 300px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    scroll-snap-align: start;
+    transition: box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-content {
+    text-align: center;
+    color: var(--primary-white);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-content {
+    transform: translateY(0);
+}
+
+.gallery-content i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.gallery-content p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
 
 /* Responsive Design */
 @media (max-width: 1024px) {
@@ -591,6 +873,12 @@ nav.scrolled {
     
     .service-card {
         height: 380px;
+    }
+    
+    /* Gallery tablet - keep horizontal scroll */
+    .gallery-item {
+        flex: 0 0 350px;
+        height: 260px;
     }
 }
 
@@ -1456,6 +1744,96 @@ footer {
         padding: 0.4rem 1rem;
     }
     
+    /* About section mobile */
+    .about {
+        padding: 4rem 0;
+    }
+    
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .about-text .section-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .about-details {
+        gap: 1.5rem;
+    }
+    
+    .about-feature {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        margin: 0 auto;
+    }
+    
+    .feature-content h3 {
+        font-size: 1.1rem;
+    }
+    
+    .feature-content p {
+        font-size: 0.9rem;
+    }
+    
+    .about-cta {
+        text-align: center;
+    }
+    
+    .about-image img {
+        height: 300px;
+    }
+    
+    .overlay-badge {
+        font-size: 0.9rem;
+    }
+    
+    .overlay-badge i {
+        font-size: 1.2rem;
+    }
+    
+    /* Gallery mobile - keep horizontal scroll */
+    .gallery {
+        padding: 4rem 0;
+    }
+    
+    .gallery-scroll-hint {
+        font-size: 0.8rem;
+        gap: 0.5rem;
+    }
+    
+    .gallery-scroll-hint i {
+        font-size: 0.9rem;
+    }
+    
+    .gallery-grid {
+        gap: 1rem;
+        margin-top: 1.5rem;
+        padding: 0 1rem 1rem 1rem;
+    }
+    
+    .gallery-item {
+        flex: 0 0 280px;
+        height: 210px;
+    }
+    
+    .gallery-content i {
+        font-size: 2rem;
+    }
+    
+    .gallery-content p {
+        font-size: 0.9rem;
+    }
+
     /* Sections padding */
     .services,
     .process,

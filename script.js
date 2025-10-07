@@ -186,7 +186,7 @@ form.addEventListener('submit', (e) => {
 });
 
 // Add intersection observer for smooth fade-in animations
-const fadeElements = document.querySelectorAll('.section-header, .contact-card');
+const fadeElements = document.querySelectorAll('.section-header, .contact-card, .gallery-item, .about-feature');
 
 const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -231,3 +231,19 @@ function animateTicker() {
 
 // Start the animation
 animateTicker();
+
+// Hide gallery scroll hint after user scrolls
+const galleryGrid = document.querySelector('.gallery-grid');
+const scrollHint = document.querySelector('.gallery-scroll-hint');
+
+if (galleryGrid && scrollHint) {
+    galleryGrid.addEventListener('scroll', () => {
+        scrollHint.style.transition = 'opacity 0.3s ease';
+        scrollHint.style.opacity = '0';
+        
+        // Remove the hint completely after fade out
+        setTimeout(() => {
+            scrollHint.style.display = 'none';
+        }, 300);
+    }, { once: true });
+}
