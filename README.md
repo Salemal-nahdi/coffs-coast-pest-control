@@ -37,7 +37,7 @@ This ultra-modern, cutting-edge website for Coffs Coast Pest Control features:
   - Business: Coffs Coast Pest Control
   - Owner: Cristian O'Brien
   - Phone: 0449 252 963
-  - Email: coffscoastpc@gmail.com
+  - Email: info@vetragrp.com
   - ABN: 95610493013
 
 ### 🚀 How to Deploy to Netlify
