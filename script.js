@@ -13,15 +13,17 @@ window.addEventListener('load', () => {
 
 // Particles
 const particlesContainer = document.querySelector('.particles');
-const particleCount = 50;
-
-for (let i = 0; i < particleCount; i++) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    particle.style.left = Math.random() * 100 + '%';
-    particle.style.animationDelay = Math.random() * 10 + 's';
-    particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-    particlesContainer.appendChild(particle);
+if (particlesContainer) {
+    const particleCount = 50;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 10 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particlesContainer.appendChild(particle);
+    }
 }
 
 // Navigation
@@ -147,43 +149,49 @@ function updateTestimonial() {
     slide.querySelector('.author-avatar').textContent = testimonial.avatar;
 }
 
-document.getElementById('nextBtn').addEventListener('click', () => {
-    currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-    updateTestimonial();
-});
-
-document.getElementById('prevBtn').addEventListener('click', () => {
-    currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
-    updateTestimonial();
-});
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+if (nextBtn && prevBtn) {
+    nextBtn.addEventListener('click', () => {
+        currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+        updateTestimonial();
+    });
+    
+    prevBtn.addEventListener('click', () => {
+        currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+        updateTestimonial();
+    });
+}
 
 // Back to Top
 const backToTop = document.getElementById('backToTop');
-
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 500) {
-        backToTop.classList.add('visible');
-    } else {
-        backToTop.classList.remove('visible');
-    }
-});
-
-backToTop.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+if (backToTop) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
     });
-});
+    
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
 
 // Theme toggle removed for consistent design
 
 // Form Validation - Netlify handles submission
 const form = document.querySelector('form');
-
-form.addEventListener('submit', (e) => {
-    // Form will submit to Netlify automatically
-    // Netlify will redirect to a success page or show a default message
-});
+if (form) {
+    form.addEventListener('submit', (e) => {
+        // Form will submit to Netlify automatically
+        // Netlify will redirect to a success page or show a default message
+    });
+}
 
 // Add intersection observer for smooth fade-in animations
 const fadeElements = document.querySelectorAll('.section-header, .contact-card, .gallery-item, .about-feature');
@@ -211,26 +219,28 @@ fadeElements.forEach(el => {
 
 // Smooth Infinite Stats Ticker
 const ticker = document.querySelector('.stats-ticker-content');
-let scrollPosition = 0;
-const scrollSpeed = 0.5; // pixels per frame - adjust for speed
-
-function animateTicker() {
-    scrollPosition += scrollSpeed;
+if (ticker) {
+    let scrollPosition = 0;
+    const scrollSpeed = 0.5; // pixels per frame - adjust for speed
     
-    // Get the width of one complete set (we have 6 sets, so divide by 6)
-    const tickerWidth = ticker.scrollWidth / 6;
-    
-    // Reset position when we've scrolled one complete set
-    if (scrollPosition >= tickerWidth) {
-        scrollPosition = 0;
+    function animateTicker() {
+        scrollPosition += scrollSpeed;
+        
+        // Get the width of one complete set (we have 6 sets, so divide by 6)
+        const tickerWidth = ticker.scrollWidth / 6;
+        
+        // Reset position when we've scrolled one complete set
+        if (scrollPosition >= tickerWidth) {
+            scrollPosition = 0;
+        }
+        
+        ticker.style.transform = `translateX(-${scrollPosition}px)`;
+        requestAnimationFrame(animateTicker);
     }
     
-    ticker.style.transform = `translateX(-${scrollPosition}px)`;
-    requestAnimationFrame(animateTicker);
+    // Start the animation
+    animateTicker();
 }
-
-// Start the animation
-animateTicker();
 
 // Hide gallery scroll hint after user scrolls
 const galleryGrid = document.querySelector('.gallery-grid');
