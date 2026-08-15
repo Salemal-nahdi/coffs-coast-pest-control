@@ -6,6 +6,10 @@
     <title>Coffs Coast Pest Control - Command Center & Field Portal</title>
     <link rel="stylesheet" href="../styles.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Portal design system: Montserrat + black/white -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         @media print {
             body { background: white !important; color: black !important; }
@@ -18,15 +22,59 @@
             touch-action: none;
             cursor: crosshair;
         }
+
+        /* ===== Unified hub — portal design system overrides ===== */
+        body { font-family: 'Montserrat', sans-serif; background: #000; }
+
+        /* Transparent logo always sits on a solid black shell so it pops */
+        .logo-black-shell {
+            background: #000;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 0;
+            overflow: hidden;
+        }
+        .logo-black-shell img { object-fit: contain; width: 100%; height: 100%; display: block; }
+
+        /* Header accents migrated green/purple/blue -> black/white to match portal.
+           Required because switchTab() hardcodes emerald/amber for active tabs. */
+        #tabGP.bg-emerald-600, #tabTI.bg-amber-600 {
+            background-color: #ffffff !important;
+            color: #000000 !important;
+        }
+        #tabGP.text-slate-400, #tabTI.text-slate-400 { color: #a3a3a3 !important; }
+        #tabGP.text-slate-400:hover, #tabTI.text-slate-400:hover { color: #ffffff !important; }
+
+        /* Social Media calendar — portal card styling */
+        .post-image { object-fit: cover; width: 100%; height: 100%; display: block; }
+        .post-watermark {
+            position: absolute; right: 10px; bottom: 10px;
+            width: 38px; height: 38px;
+            background: rgba(0,0,0,0.55);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; pointer-events: none; line-height: 0;
+        }
+        .post-watermark img { width: 78%; height: 78%; object-fit: contain; display: block; }
+        .spinner {
+            display: inline-block; width: 1rem; height: 1rem;
+            border: 2px solid rgba(0,0,0,0.3); border-top-color: #000;
+            border-radius: 9999px; animation: spin 0.7s linear infinite; vertical-align: middle;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans text-xs">
 
     <header class="no-print bg-slate-900 border-b border-slate-800 sticky top-0 z-50 px-4 sm:px-8 py-3 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-xl">
         <div class="flex items-center gap-3">
+            <!-- Brand logo on a solid black shell (portal design system) -->
+            <div class="logo-black-shell rounded-xl w-11 h-11 shrink-0">
+                <img src="logo-no-background.png" alt="Coffs Coast Pest Control logo">
+            </div>
             <div>
-                <h1 class="text-sm font-black tracking-wider text-white">CCPC FIELD COMMAND CENTER</h1>
-                <p class="text-[10px] text-emerald-400 font-semibold">Inspector: Cristian O'Brien (Licence #5103825)</p>
+                <h1 class="text-sm font-black tracking-wider text-white uppercase">Coffs Coast Pest Control</h1>
+                <p class="text-[10px] text-neutral-400 font-semibold">Field Command · Inspector: Cristian O'Brien (Licence #5103825)</p>
             </div>
         </div>
 
@@ -36,6 +84,9 @@
             </button>
             <button onclick="switchTab('ti')" id="tabTI" class="px-4 py-2 rounded-lg font-bold text-xs transition cursor-pointer text-slate-400 hover:text-white">
                 Termite Inspection (AS 3660)
+            </button>
+            <button onclick="switchTab('social')" id="tabSocial" class="px-4 py-2 rounded-lg font-bold text-xs transition cursor-pointer text-slate-400 hover:text-white">
+                Social Media Calendar
             </button>
         </div>
 
@@ -128,6 +179,8 @@
                         <tr class="bg-slate-200 border-b border-black">
                             <th class="border border-black p-1 font-bold">Product Trade Name</th>
                             <th class="border border-black p-1 font-bold">Active Constituent</th>
+                            <th class="border border-black p-1 font-bold">Application Equipment</th>
+                            <th class="border border-black p-1 font-bold">Calibration / Nozzle</th>
                             <th class="border border-black p-1 font-bold">Rate Used / Amount</th>
                             <th class="border border-black p-1 font-bold">Batch No. / APVMA</th>
                             <th class="border border-black p-1 font-bold no-print text-center w-12">Action</th>
@@ -146,12 +199,27 @@
                                 </select>
                             </td>
                             <td class="border border-black p-1"><input type="text" value="Deltamethrin 25g/L" class="w-full bg-transparent active-input"></td>
+                            <td class="border border-black p-1">
+                                <select class="w-full bg-transparent font-bold border-b border-slate-300 pb-0.5 outline-none equipment-select">
+                                    <option value="Hand Sprayer">Hand Sprayer</option>
+                                    <option value="Backpack / Knapsack Sprayer">Backpack / Knapsack Sprayer</option>
+                                    <option value="Power Sprayer (Petrol Pump)">Power Sprayer (Petrol Pump)</option>
+                                    <option value="Dusting Applicator">Dusting Applicator</option>
+                                    <option value="Gel / Bait Applicator">Gel / Bait Applicator</option>
+                                    <option value="Drenching / Injection">Drenching / Injection</option>
+                                    <option value="Custom Equipment...">Custom Equipment...</option>
+                                </select>
+                            </td>
+                            <td class="border border-black p-1"><input type="text" value="Calibrated - 60mls / 10L" placeholder="e.g. Calibrated / nozzle type" class="w-full bg-transparent calibration-input"></td>
                             <td class="border border-black p-1"><input type="text" value="60mls / 10L" class="w-full bg-transparent"></td>
                             <td class="border border-black p-1"><input type="text" value="APVMA 1100" class="w-full bg-transparent"></td>
                             <td class="border border-black p-1 no-print text-center"><button type="button" onclick="removeChemRow(this)" class="text-red-600 font-bold text-xs hover:underline">X</button></td>
                         </tr>
                     </tbody>
                 </table>
+                <p class="text-[9px] text-slate-600 mt-1">
+                    EPA compliance: equipment used to apply a registered pesticide must be calibrated so the label dilution rate is delivered correctly, and must be cleaned after use to avoid cross-contamination. Recording the application equipment & calibration supports your NSW Pesticides Act 1999 record-keeping.
+                </p>
             </div>
 
             <div class="space-y-3 mb-6">
@@ -286,6 +354,87 @@
             </div>
         </div>
 
+        <!-- ===== Social Media Calendar tab (portal design system) ===== -->
+        <div id="formSocial" class="hidden no-print">
+            <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 sm:p-8 mb-8">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-neutral-800 pb-5">
+                    <div class="flex items-center gap-4">
+                        <div class="logo-black-shell rounded-xl w-12 h-12 shrink-0">
+                            <img src="logo-no-background.png" alt="Coffs Coast Pest Control logo">
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-black tracking-tight text-white uppercase">Content Calendar</h2>
+                            <p class="text-xs text-neutral-400">Review, edit & approve scheduled posts for Facebook, Instagram & Google Business Profile.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="socialRefresh()" class="bg-neutral-800 hover:bg-neutral-700 text-white font-bold px-3 py-2 rounded-lg text-xs transition cursor-pointer">↻ Refresh</button>
+                        <button onclick="socialLogoutRedirect()" class="border border-neutral-700 hover:border-white text-white font-bold px-3 py-2 rounded-lg text-xs transition cursor-pointer">Open Portal</button>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-3 mt-5 mb-7">
+                    <div class="rounded-xl bg-neutral-900 border border-neutral-800 p-3">
+                        <p class="text-[10px] text-neutral-400 uppercase tracking-wider">Total Posts</p>
+                        <p id="socTotal" class="text-xl font-bold text-white">0</p>
+                    </div>
+                    <div class="rounded-xl bg-neutral-900 border border-neutral-800 p-3">
+                        <p class="text-[10px] text-neutral-400 uppercase tracking-wider">Approved</p>
+                        <p id="socApproved" class="text-xl font-bold text-green-400">0</p>
+                    </div>
+                    <div class="rounded-xl bg-neutral-900 border border-neutral-800 p-3">
+                        <p class="text-[10px] text-neutral-400 uppercase tracking-wider">Status</p>
+                        <p id="socStatus" class="text-sm font-bold text-amber-400 mt-1">Demo Mode</p>
+                    </div>
+                </div>
+
+                <!-- Calendar grid -->
+                <div id="socialGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+                <!-- 10-to-6 batch workflow -->
+                <div class="mt-10 border-t border-neutral-800 pt-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+                        <div>
+                            <h3 class="text-base font-black tracking-tight text-white uppercase">10 → 6 Content Selection</h3>
+                            <p class="text-[11px] text-neutral-400">Pick your 6 best of 10 for this month’s calendar. Duplicate topics/angles/image variants are blocked automatically.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="socialNotify()" class="bg-white text-black text-xs font-bold px-3 py-2 rounded-lg hover:bg-neutral-200 transition cursor-pointer">✉️ Notify client (ready)</button>
+                            <button onclick="document.getElementById('socialFile').click()" class="border border-neutral-700 text-white text-xs font-bold px-3 py-2 rounded-lg hover:border-white transition cursor-pointer">⬆️ Upload Job-Site Photo</button>
+                            <input id="socialFile" type="file" accept="image/*" multiple hidden onchange="socialOnFiles(this.files)">
+                        </div>
+                    </div>
+
+                    <!-- Upload dropzone -->
+                    <div id="socialDrop" onclick="document.getElementById('socialFile').click()"
+                         ondrop="socialOnDrop(event)" ondragover="socialDragOver(event)" ondragleave="socialDragLeave(event)"
+                         class="border-2 border-dashed rounded-2xl p-5 mb-5 text-center cursor-pointer transition bg-neutral-900/40 border-neutral-700">
+                        <p class="text-sm font-semibold text-white">📸 Drag & drop real job-site photos here</p>
+                        <p class="text-[11px] text-neutral-500 mt-1">or click to browse. Uploads auto-apply the logo watermark on preview and join the approval queue instantly.</p>
+                    </div>
+                    <p id="socialNotifyMsg" class="text-[11px] text-emerald-400 mb-3 hidden"></p>
+
+                    <!-- Uploaded queue -->
+                    <div id="socialUploads" class="hidden mb-6">
+                        <p class="text-[11px] font-bold text-neutral-300 uppercase tracking-wider mb-2">In approval queue (uploaded)</p>
+                        <div id="socialUploadGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+                    </div>
+
+                    <!-- Pool grid -->
+                    <div id="socialPool" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+                    <!-- Selection summary -->
+                    <div class="mt-5 flex items-center justify-between rounded-xl bg-neutral-900 border border-neutral-800 p-4">
+                        <p class="text-sm font-semibold text-white">Selected: <span id="socialSelCount" class="text-emerald-400 font-black">0</span> / 6</p>
+                        <p id="socialDupMsg" class="text-[11px] text-neutral-400">✓ No duplicate topics, angles or image variants</p>
+                    </div>
+                </div>
+
+                <p class="text-center text-[11px] text-neutral-500 mt-8">Approved posts are flagged for final review before publishing. Connect the Next.js portal & Supabase for live sync.</p>
+            </div>
+        </div>
+
     </main>
 
     <script>
@@ -310,6 +459,305 @@
                 tabTI.className = "px-4 py-2 rounded-lg font-bold text-xs transition cursor-pointer text-slate-400 hover:text-white";
             }
         }
+
+        /* ============================================================
+           SOCIAL MEDIA CALENDAR (new unified-hub tab)
+           Self-contained — added on top of the existing logic without
+           touching any pre-existing functions/data/scripts.
+           ============================================================ */
+        const SOCIAL_SCHEMA = [
+            { id:'post-1', image:'COFFSCOASTHR-1.jpg',  platform:'Instagram', status:'Draft', topic:'general-pest', angle:'call-to-book', imageVariant:'p1' },
+            { id:'post-2', image:'COFFSCOASTHR-2.jpg',  platform:'Facebook',  status:'Draft', topic:'termite-guard', angle:'as3660-education', imageVariant:'p2' },
+            { id:'post-3', image:'COFFSCOASTHR-4.jpg',  platform:'Facebook',  status:'Draft', topic:'rodent-control', angle:'peace-of-mind', imageVariant:'p3' },
+            { id:'post-4', image:'COFFSCOASTHR-6.jpg',  platform:'Instagram', status:'Draft', topic:'local-experts', angle:'family-run', imageVariant:'p4' },
+            { id:'post-5', image:'COFFSCOASTHR-10.jpg', platform:'Google Business Profile', status:'Draft', topic:'reviews', angle:'google-reviews', imageVariant:'p5' },
+            { id:'post-6', image:'COFFSCOASTHR-15.jpg', platform:'Facebook',  status:'Draft', topic:'spider-season', angle:'seasonal-prep', imageVariant:'p6' },
+            { id:'post-7', image:'COFFSCOASTHR-1.jpg',  platform:'Instagram', status:'Draft', topic:'general-pest', angle:'safety-steps', imageVariant:'p1-alt', mediaType:'video', mediaUrl:'media/general-pest-tips.mp4' },
+            { id:'post-8', image:'COFFSCOASTHR-2.jpg',  platform:'Facebook',  status:'Draft', topic:'termite-guard', angle:'peace-of-mind', imageVariant:'p2-alt', mediaType:'video', mediaUrl:'media/termite-inspection.mp4' },
+            { id:'post-9', image:'COFFSCOASTHR-4.jpg',  platform:'Instagram', status:'Draft', topic:'rodent-control', angle:'call-to-book', imageVariant:'p3-alt' },
+            { id:'post-10',image:'COFFSCOASTHR-6.jpg', platform:'Google Business Profile', status:'Draft', topic:'seasonal', angle:'spring-prep', imageVariant:'p4-alt' },
+        ];
+        // Duplicate-prevention metadata: a post is a "double-up" if it repeats
+        // topic+angle+imageVariant. Build a fingerprint.
+        function socialDedupeKey(p){ return [p.topic||'', p.angle||'', p.imageVariant||'', p.image||'', p.mediaType||'image'].join('::').toLowerCase().trim(); }
+        function socialFindDups(list){ const seen=new Set(), dups=new Set(); list.forEach(p=>{ const k=socialDedupeKey(p); if(seen.has(k)) dups.add(p.id); seen.add(k); }); return dups; }
+
+        // 10-to-6 selection state
+        let socialSelected = new Set(['post-1','post-2','post-3','post-4','post-5','post-6']);
+        let socialUploads = [];
+        const SOCIAL_CAPTIONS = {
+            'post-1':'🐜 Protecting Coffs Harbour homes year-round. Book your general pest treatment today — call Cristian on 0449 252 963.',
+            'post-2':'Termites cause more damage than fire each year in Australia. Stay ahead with an AS 3660 compliant termite inspection. ☎️ 0449 252 963',
+            'post-3':'Rodent-free means rest easy. Discreet, effective rodent control across the Coffs Coast. ABN 95 610 493 013.',
+            'post-4':'Your local, family-run pest experts 🏡 Coffs Harbour, Woolgoolga, Sawtell & beyond. Free quotes — call 0449 252 963 today!',
+            'post-5':'Loved by our local customers ⭐ Friendly, thorough and reliable pest control. Grateful for your Google review!',
+            'post-6':'Spider season is coming 🕷️ Leave the web-work to us. General pest + spider treatment, one call: 0449 252 963.',
+        };
+        const SOCIAL_PLATFORM_STYLES = {
+            'Facebook':'background:#1877F2;color:#fff;',
+            'Instagram':'background:linear-gradient(to right,#f09433,#dc2743,#bc1888);color:#fff;',
+            'Google Business Profile':'background:#4285F4;color:#fff;',
+        };
+
+        const SOCIAL_DAYS = [2,4]; // Tuesdays & Thursdays (smart monthly cadence)
+        function socialPad(n){ return String(n).padStart(2,'0'); }
+        function socialIso(d){ return d.getFullYear()+'-'+socialPad(d.getMonth()+1)+'-'+socialPad(d.getDate()); }
+        function socialAddDays(d,n){ const c=new Date(d); c.setDate(c.getDate()+n); return c; }
+        function socialAssignSchedule(count){
+            const base=new Date(); base.setMonth(base.getMonth()+1);
+            const start=new Date(base.getFullYear(), base.getMonth(),1);
+            const end=new Date(base.getFullYear(), base.getMonth()+1,0);
+            const slots=[];
+            for(let d=start; d<=end; d=socialAddDays(d,1)){ if(SOCIAL_DAYS.includes(d.getDay())) slots.push(new Date(d)); }
+            if(!slots.length){ return Array.from({length:count},(_,i)=>socialIso(socialAddDays(start,i))); }
+            return Array.from({length:count},(_,i)=>socialIso(slots[i%slots.length]));
+        }
+
+        // Try to read live Supabase posts (portals API), else fall back to local demo.
+        let socialPosts = [];
+        async function socialLoad(){
+            try{
+                const res = await fetch(window.location.origin + '/api/posts', { cache:'no-store' });
+                if(res.ok){ const data = await res.json(); if(data && Array.isArray(data.posts) && data.posts.length){ socialPosts = data.posts; } }
+                else { socialPosts = []; }
+            } catch(e){ socialPosts = []; }
+        }
+        function socialResolve(){
+            if(socialPosts && socialPosts.length){ return socialPosts; }
+            const dates = socialAssignSchedule(SOCIAL_SCHEMA.length);
+            return SOCIAL_SCHEMA.map((p,i)=>({ ...p, date: dates[i], caption: SOCIAL_CAPTIONS[p.id] || '', status: p.status }));
+        }
+        const socialEdits = {};
+        function socialRender(){
+            const grid = document.getElementById('socialGrid');
+            const list = socialResolve();
+            document.getElementById('socTotal').textContent = list.length;
+            document.getElementById('socApproved').textContent = list.filter(p=>p.status==='Approved').length;
+            document.getElementById('socStatus').textContent = (socialPosts && socialPosts.length) ? 'Live Sync' : 'Demo Mode';
+            if(!grid) return;
+            if(!list.length){ grid.innerHTML = '<p class="text-sm text-neutral-500 col-span-full">No scheduled posts.</p>'; return; }
+            grid.innerHTML = list.map(p=>{
+                const st = SOCIAL_PLATFORM_STYLES[p.platform] || 'background:#525252;color:#fff;';
+                const val = socialEdits[p.id] !== undefined ? socialEdits[p.id] : (p.caption || '');
+                const isVid = p.mediaType === 'video';
+                const mediaHtml = isVid
+                    ? `<video src="${p.mediaUrl || p.image}" controls preload="metadata" playsinline class="w-full h-full object-contain"></video>`
+                    : `<img src="${p.image}" alt="Scheduled post ${p.date}" class="post-image" loading="lazy">`;
+                return `
+                <article class="rounded-2xl overflow-hidden border bg-neutral-900 transition ${p.status==='Approved'?'border-green-500/60':'border-neutral-800'}">
+                    <div class="relative aspect-square w-full bg-black overflow-hidden">
+                        ${mediaHtml}
+                        <div class="post-watermark"><img src="logo-no-background.png" alt="" aria-hidden="true"></div>
+                        <span class="absolute top-2 left-2 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-black/70 text-white">${p.date||''}</span>
+                        <span class="absolute top-2 right-2 text-[10px] font-semibold px-2 py-0.5 rounded-full" style="${st}">${p.platform}</span>
+                        ${isVid?'<span class="absolute bottom-3 right-14 rounded-md bg-black/60 text-[10px] font-bold px-2 py-0.5 text-white">▶ Video</span>':''}
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${p.status==='Approved'?'bg-green-500/20 text-green-400':'bg-neutral-700 text-neutral-300'}">${p.status}</span>
+                        ${p.status==='Approved'?' <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400">Flagged for review</span>':''}
+                        </div>
+                        <textarea data-id="${p.id}" rows="4" class="social-caption w-full px-3 py-2 rounded-lg bg-black border border-neutral-700 text-white text-sm leading-relaxed resize-y outline-none focus:border-white">${val}</textarea>
+                        <div class="flex items-center gap-2">
+                            <button onclick="socialCopy('${p.id}')" class="flex-1 py-2 rounded-lg border border-neutral-700 text-white text-sm font-medium hover:border-white transition cursor-pointer">📋 Copy</button>
+                            <button onclick="socialDownload('${p.id}')" class="flex-1 py-2 rounded-lg border border-neutral-700 text-white text-sm font-medium hover:border-white transition cursor-pointer">⬇ Download</button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="socialSave('${p.id}')" class="flex-1 py-2 rounded-lg border border-neutral-700 text-white text-sm font-medium hover:border-white transition cursor-pointer">Save caption</button>
+                            ${p.status!=='Approved'?`<button onclick="socialApprove('${p.id}')" class="flex-1 py-2 rounded-lg bg-white text-black text-sm font-semibold hover:bg-neutral-200 transition cursor-pointer">Approve</button>`:`<span class="flex-1 py-2 rounded-lg bg-green-500/20 text-green-400 text-sm font-semibold text-center">Approved ✓</span>`}
+                        </div>
+                    </div>
+                </article>`;
+            }).join('');
+            grid.querySelectorAll('.social-caption').forEach(t=>{
+                t.addEventListener('input', ()=>{ socialEdits[t.dataset.id] = t.value; });
+            });
+        }
+        function socialSave(postId){
+            const t = document.querySelector(`textarea[data-id="${postId}"]`);
+            if(t){ socialEdits[postId] = t.value; }
+            // Persist locally; becomes a real Supabase write via the Next.js portal.
+            const list = socialResolve();
+            const found = list.find(p=>p.id===postId);
+            if(found){ found.caption = socialEdits[postId] || found.caption; }
+            alert('Caption saved.' + (socialPosts && socialPosts.length ? ' (Synced locally in this build.)' : ''));
+        }
+        function socialApprove(postId){
+            const list = socialResolve();
+            const found = list.find(p=>p.id===postId);
+            if(found){ found.status='Approved'; }
+            socialPosts = socialPosts.map(p=>p.id===postId?{...p,status:'Approved'}:p);
+            socialRender();
+        }
+        function socialRefresh(){ socialLoad().then(socialRender); }
+        function socialLogoutRedirect(){ window.open('/login', '_blank'); }
+
+        /* ============================================================
+           10 → 6 BATCH WORKFLOW (pool, upload, notify)
+           Self-contained — extends the Social tab without touching any
+           pre-existing core reporting functions or the GP/TI tabs.
+           ============================================================ */
+        // render the pool + selection UI
+        function socialRenderPool(){
+            const grid = document.getElementById('socialPool');
+            if(!grid) return;
+            const dups = socialFindDups(SOCIAL_SCHEMA);
+            grid.innerHTML = SOCIAL_SCHEMA.map(p=>{
+                const isSel = socialSelected.has(p.id);
+                const isDup = dups.has(p.id);
+                const isVid = p.mediaType === 'video';
+                const mediaHtml = isVid
+                    ? `<video src="${p.mediaUrl || p.image}" controls preload="metadata" playsinline class="w-full h-full object-contain"></video>`
+                    : `<img src="${p.image}" alt="${p.topic}" class="post-image" loading="lazy">`;
+                return `
+                <div class="rounded-xl overflow-hidden border transition ${isSel?'border-white':'border-neutral-800'} ${isDup?'opacity-60':''}">
+                    <div class="relative aspect-square bg-black overflow-hidden">
+                        ${mediaHtml}
+                        ${isDup?'<span class="absolute inset-0 flex items-center justify-center bg-black/60 text-[10px] font-black uppercase tracking-wider text-red-400">Duplicate — blocked</span>':''}
+                        ${isSel?'<span class="absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-600 text-white">Selected</span>':''}
+                        ${isVid?'<span class="absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/70 text-white">▶ Video</span>':''}
+                    </div>
+                    <div class="p-3 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-bold text-neutral-400">${p.topic} · ${p.angle||''}</span>
+                            <span class="text-[9px] text-neutral-600">${p.imageVariant||''}</span>
+                        </div>
+                        <p class="text-[11px] text-neutral-300 leading-relaxed">${SOCIAL_CAPTIONS[p.id]||''}</p>
+                        <div class="flex gap-2">
+                            ${isSel
+                                ? `<button onclick="socialSwapOut('${p.id}')" class="flex-1 py-1.5 rounded-lg border border-neutral-700 text-white text-xs font-semibold hover:border-white transition cursor-pointer">Swap out</button>`
+                                : `<button onclick="socialTogglePool('${p.id}')" ${isDup?'disabled':''} class="flex-1 py-1.5 rounded-lg bg-neutral-800 text-white text-xs font-semibold hover:bg-neutral-700 transition ${isDup?'disabled:opacity-40':''} cursor-pointer">Add to 6</button>`}
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+            const sc = document.getElementById('socialSelCount');
+            if(sc) sc.textContent = socialSelected.size;
+            const msg = document.getElementById('socialDupMsg');
+            if(msg){
+                msg.textContent = dups.size === 0
+                    ? '✓ No duplicate topics, angles or image variants'
+                    : `⚠ ${dups.size} duplicate option(s) blocked`;
+                msg.className = dups.size === 0 ? 'text-[11px] text-neutral-400' : 'text-[11px] text-red-400';
+            }
+        }
+        function socialTogglePool(id){
+            if(socialSelected.has(id)){ socialSelected.delete(id); }
+            else if(socialSelected.size < 6){ socialSelected.add(id); }
+            else { alert('You can only schedule 6 posts for the month. Swap one out first.'); }
+            socialRenderPool();
+        }
+        function socialSwapOut(id){ socialSelected.delete(id); socialRenderPool(); }
+
+        /* ---- Clipboard + asset download utilities (image & .mp4) ---- */
+        function socialResolvePost(id){
+            const list = socialResolve();
+            return list.find(p=>p.id===id) || SOCIAL_SCHEMA.find(p=>p.id===id);
+        }
+        function socialCopy(id){
+            const p = socialResolvePost(id);
+            const el = document.querySelector(`textarea[data-id="${id}"]`);
+            const text = (el && el.value) || (p && p.caption) || '';
+            if(!text) return;
+            if(navigator.clipboard && navigator.clipboard.writeText){
+                navigator.clipboard.writeText(text).catch(()=>{});
+            } else {
+                const ta = document.createElement('textarea');
+                ta.value = text; document.body.appendChild(ta); ta.select();
+                try{ document.execCommand('copy'); }catch(e){}
+                document.body.removeChild(ta);
+            }
+        }
+        function socialDownload(id){
+            const p = socialResolvePost(id);
+            if(!p) return;
+            const isVid = p.mediaType === 'video';
+            const url = isVid ? (p.mediaUrl || p.image) : p.image;
+            if(!url) return;
+            const srcName = url.split('/').pop() || ('post-'+id);
+            const fname = isVid ? srcName.replace(/\.[^.]+$/, '') + '.mp4' : srcName;
+            const a = document.createElement('a');
+            a.href = url; a.download = fname;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        }
+
+        // ---- Upload (drag-drop + file picker) ----
+        function socialDragOver(e){ if(e.preventDefault)e.preventDefault(); document.getElementById('socialDrop') && document.getElementById('socialDrop').classList.add('border-white','bg-neutral-800'); }
+        function socialDragLeave(e){ document.getElementById('socialDrop') && document.getElementById('socialDrop').classList.remove('border-white','bg-neutral-800'); }
+        function socialOnDrop(e){ if(e.preventDefault)e.preventDefault(); socialDragLeave(e); socialOnFiles(e.dataTransfer.files); }
+        function socialOnFiles(files){
+            if(!files || !files.length) return;
+            Array.from(files).forEach(file=>{
+                if(!file.type.startsWith('image/')) return;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const dataUrl = reader.result;
+                    const up = { id:'upload-'+Date.now()+Math.random().toString(36).slice(2,6), image:dataUrl, caption:'Job-site photo — '+(file.name||'upload.jpg'), topic:'job-site', angle:'client-upload', imageVariant:'upload-'+Date.now() };
+                    socialUploads.push(up);
+                    socialRenderUploads();
+                    // Fire the portal API (best-effort; no-op if unavailable).
+                    fetch('/api/upload', { method:'POST', headers:{'Content-Type':'application/json'},
+                        body: JSON.stringify({ image:dataUrl, caption:up.caption, filename:file.name }) }).catch(()=>{});
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        function socialRenderUploads(){
+            const box = document.getElementById('socialUploads');
+            const grid = document.getElementById('socialUploadGrid');
+            if(!box || !grid) return;
+            if(!socialUploads.length){ box.classList.add('hidden'); return; }
+            box.classList.remove('hidden');
+            grid.innerHTML = socialUploads.map(u=>`
+                <div class="relative aspect-square rounded-xl overflow-hidden border border-neutral-700">
+                    <img src="${u.image}" alt="${u.caption}" class="post-image">
+                    <div class="post-watermark"><img src="logo-no-background.png" alt="" aria-hidden="true"></div>
+                    <span class="absolute bottom-1 left-1 text-[9px] px-2 py-0.5 rounded-full bg-emerald-600 text-white font-bold">Queued</span>
+                </div>`).join('');
+        }
+
+        // ---- Notification hook ----
+        async function socialNotify(){
+            const msg = document.getElementById('socialNotifyMsg');
+            msg.classList.remove('hidden');
+            msg.textContent = 'Sending…';
+            try{
+                const res = await fetch('/api/notify', { method:'POST', headers:{'Content-Type':'application/json'}, body:'{}' });
+                const data = await res.json();
+                msg.textContent = data.details || (data.sent ? 'Notification sent.' : 'Queued.');
+                msg.style.color = data.sent ? '#34d399' : '#fbbf24';
+            }catch(e){
+                msg.textContent = 'Notification hook not reachable. Add N8N_WEBHOOK_URL or SMTP_* to the portal env.';
+                msg.style.color = '#f87171';
+            }
+        }
+
+        // init pool UI on social tab open
+        function socialInitPool(){
+            socialSelected = new Set(['post-1','post-2','post-3','post-4','post-5','post-6']);
+            socialRenderPool();
+            socialRenderUploads();
+        }
+
+        // Wire the third tab into the unified switchTab UI without altering the original.
+        (function patchSocialTab(){
+            const orig = window.switchTab;
+            window.switchTab = function(mode){
+                const gp=document.getElementById('formGP'), ti=document.getElementById('formTI'), sc=document.getElementById('formSocial');
+                const tgp=document.getElementById('tabGP'), tti=document.getElementById('tabTI'), tsc=document.getElementById('tabSocial');
+                const hideAll=()=>{ [gp,ti,sc].forEach(el=>el && el.classList.add('hidden')); [tgp,tti,tsc].forEach(el=>el && (el.className='px-4 py-2 rounded-lg font-bold text-xs transition cursor-pointer text-slate-400 hover:text-white')); };
+                hideAll();
+                if(mode==='social'){
+                    sc && sc.classList.remove('hidden');
+                    tsc.className='px-4 py-2 rounded-lg font-bold text-xs transition cursor-pointer bg-white text-black shadow';
+                    socialLoad().then(socialRender);
+                    socialInitPool();
+                } else { orig(mode); }
+            };
+            // Init on load
+            socialLoad().then(socialRender);
+        })();
+
 
         // Chemical Log Table Dynamic Rows & Dropdown Auto-fill
         function autoFillActive(selectElement) {
@@ -337,6 +785,18 @@
                     </select>
                 </td>
                 <td class="border border-black p-1"><input type="text" value="Deltamethrin 25g/L" class="w-full bg-transparent active-input"></td>
+                <td class="border border-black p-1">
+                    <select class="w-full bg-transparent font-bold border-b border-slate-300 pb-0.5 outline-none equipment-select">
+                        <option value="Hand Sprayer">Hand Sprayer</option>
+                        <option value="Backpack / Knapsack Sprayer">Backpack / Knapsack Sprayer</option>
+                        <option value="Power Sprayer (Petrol Pump)">Power Sprayer (Petrol Pump)</option>
+                        <option value="Dusting Applicator">Dusting Applicator</option>
+                        <option value="Gel / Bait Applicator">Gel / Bait Applicator</option>
+                        <option value="Drenching / Injection">Drenching / Injection</option>
+                        <option value="Custom Equipment...">Custom Equipment...</option>
+                    </select>
+                </td>
+                <td class="border border-black p-1"><input type="text" value="Calibrated" placeholder="e.g. Calibrated / nozzle type" class="w-full bg-transparent calibration-input"></td>
                 <td class="border border-black p-1"><input type="text" value="50mls / 10L" class="w-full bg-transparent"></td>
                 <td class="border border-black p-1"><input type="text" value="APVMA -" class="w-full bg-transparent"></td>
                 <td class="border border-black p-1 no-print text-center"><button type="button" onclick="removeChemRow(this)" class="text-red-600 font-bold text-xs hover:underline">X</button></td>
@@ -495,7 +955,14 @@
                 clientEmail: document.getElementById(activeTab === 'GP' ? 'gpEmail' : 'tiEmail').value,
                 pestsAddressed: pestsArray.join(', '),
                 techName: "Cristian O'Brien",
-                serviceDate: document.getElementById(activeTab === 'GP' ? 'gpServiceDate' : 'tiServiceDate').value
+                serviceDate: document.getElementById(activeTab === 'GP' ? 'gpServiceDate' : 'tiServiceDate').value,
+                // Application equipment + calibration used for this job (GP chemical log)
+                applicationEquipment: activeTab === 'GP'
+                    ? Array.from(document.querySelectorAll('#chemTableBody .equipment-select'))
+                        .map(sel => sel.value)
+                        .filter((v, i, a) => v && a.indexOf(v) === i)
+                        .join(', ')
+                    : ''
             };
 
             const webAppUrl = "https://script.google.com/macros/s/AKfycbxvb3OrkLuFbqww4nUQvngpj-2CjPZ6r_Hx8xdDJHQuLCq_rndFxmB3Q64Xd-EKwGgI3A/exec";
